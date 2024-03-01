@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import Students from "./components/one/Students";
+import Form from "./components/one/Form";
+import { useState } from "react";
 
 function App() {
+ 
+
+  const [students, setStudents] = useState([])
+
+  const addNewMember = (memInfo) => {
+    setStudents([...students,memInfo]);
+  };
+
+  let contentSection = <p>No member yet!!</p>
+
+  if(students.length > 0){
+    contentSection = students.map((student)=>(
+      <Students name={student.name} live={student.live} key={student.name}/>
+    ))
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <section>
+        {contentSection}
+      </section>
+      <Form addNewMember={addNewMember} />
     </div>
   );
 }
